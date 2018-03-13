@@ -1,0 +1,22 @@
+
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<body>
+  <div id="app" v-cloak v-on:keyup.up="move('up')"  v-on:keyup.down="move('down')">
+    <div class="player" v-bind:class="'player-'+cacheddirection+'-'+clock" v-bind:style="{ top : computedy + y*2 +2, left : computedx + x *2}"></div>
+    <div class="wall-container" v-for="(row,index) in map" v-bind:style="{top : index *32 +2*index}">
+      <div v-bind:class="getwalltype(index,i)" v-for="(rowlet,i) in row" v-bind:style="{left : i*32 +2*i }"></div>
+    </div>
+    <p>moving : {{moving}}</p>
+    <p>direction : {{direction}}</p>
+    <p>y : {{y}}  , x : {{x}}</p>
+
+  </div>
+<body>
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+<script src="js/dungeon/utils.js"></script>
+<script src="js/dungeon/room.js"></script>
+<script src="js/dungeon/dungeon.js"></script>
+<script src="js/index.js"></script>
