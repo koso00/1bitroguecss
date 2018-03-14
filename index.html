@@ -2,10 +2,12 @@
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <body>
   <div id="app" v-cloak v-on:keyup.up="move('up')"  v-on:keyup.down="move('down')">
-    <div class="player" v-bind:class="'player-'+cacheddirection+'-'+clock" v-bind:style="{ top : computedy + y*2 +2, left : computedx + x *2}"></div>
-    <div class="wall-container" v-for="(row,index) in map" v-bind:style="{top : index *32 +2*index}">
-      <div v-bind:class="getwalltype(index,i)" v-for="(rowlet,i) in row" v-bind:style="{left : i*32 +2*i }"></div>
+    <div id="experiment">
+       <div v-bind:class="'player-'+cacheddirection+'-'+clock" class="player" v-bind:style="{ transform : 'translateX('+computedx+'px) translateZ('+computedy+'px)'}"></div>
+    <div v-for="(row,index) in map" class="cube-wrapper">
+      <div v-if="r" v-for="(r,i) in row" class="cube" v-bind:style="{ transform : 'translateX('+i*32+'px) translateZ('+index*32+'px) ' , 'z-index' : index + (10-(i+1))}" v-html="template"></div>
     </div>
+</div>
     <p>moving : {{moving}}</p>
     <p>direction : {{direction}}</p>
     <p>y : {{y}}  , x : {{x}}</p>

@@ -9,16 +9,37 @@ var app = new Vue({
     direction : "down",
     cacheddirection : "down",
     interval : "",
-    map : ""
+    map : [[1,1,1,1,1,1,1],
+          [1,0,0,0,0,0,1],
+           [1,0,0,0,0,0,1],
+           [1,0,0,0,0,0,1],
+          [1,0,0,0,0,0,1]],
+    template : `<div class="face one">
+
+        </div>
+        <div class="face two">
+
+        </div>
+        <div class="face three">
+
+        </div>
+        <div class="face four">
+
+        </div>
+        <div class="face five">
+
+        </div>
+        <div class="face six">
+        </div>`
   },
   mounted : async function(){
     /*m = await new Dungeon(20,20)
     m.generate();
     this.map = m.getCollisionMap();
     this.x = m.getStairs().up.x;
-    this.y = m.getStairs().up.y;
+    this.y = m.getStairs().up.y;*/
     self = this;
-    setInterval(function(){self.clock = !self.clock},200)*/
+    setInterval(function(){self.clock = !self.clock},200)
   },
   computed : {
     computedx : function(){
