@@ -5,9 +5,8 @@
   position : absolute;
   top:0;
   left :0;
-  transition : transform .5s linear,left .5s linear;
+  transition : transform .5s linear;
   transform-style: preserve-3d;
-  z-index : 1000;
 }
 
 

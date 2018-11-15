@@ -149,3 +149,98 @@ var app = new Vue({
       }
     }
 })
+
+
+
+
+
+
+
+
+
+if (window.requestAnimationFrame == null) {
+  window.requestAnimationFrame = (function() {
+    return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function(callback) {
+      window.setTimeout(callback, 1000 / 60);
+    };
+  })();
+}
+
+var getTime = function() {
+  return (performance && performance.now) ? performance.now() : +(new Date());
+};
+
+var element = null;
+
+FPSMeter = (function() {
+  function FPSMeter(opts) {
+    var self = this;
+    this.ui = opts.ui;
+    if (this.ui == null) {
+      this.ui = false;
+    }
+    this.fps = 0;
+    this.isRunning = false;
+    this.template = null;
+  }
+
+  FPSMeter.prototype.start = function() {
+    var measure, self;
+    self = this;
+    this.fpss = 0;
+    this.isRunning = true;
+    if (this.ui === true) {
+      element = document.createElement('div');
+      document.body.appendChild(element);
+    }
+    measure = function() {
+      var time = getTime();
+      window.requestAnimationFrame(function getFPS() {
+        self.fpss++;
+        var period = getTime() - time;
+        var _fps   = Math.round((1 / period) * 1000);
+        self.fps = _fps;
+
+        if (self.ui && element) {
+          var i = 4 - ('' + _fps).length;
+          var pad = '';
+          while (i > 0) {
+            pad += '&nbsp;';
+            i--;
+          }
+          element.innerHTML = _fps + pad + 'fps';
+
+          switch (false) {
+            case !(_fps < 7):
+              element.className = 'dead';
+              break;
+            case !(_fps < 25):
+              element.className = 'danger';
+              break;
+            case !(_fps < 40):
+              element.className = 'warn';
+              break;
+            default:
+              element.className = '';
+              break;
+          }
+        }
+        if (self.isRunning) {
+          measure();
+        }
+      });
+    };
+    measure();
+  };
+
+  FPSMeter.prototype.stop = function() {
+    this.isRunning = false;
+  };
+
+  return FPSMeter;
+})();
+
+
+
+
+(new FPSMeter({ui: true, reactive: false})).start();
